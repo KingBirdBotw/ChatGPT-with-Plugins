@@ -6,4 +6,4 @@ import { NextResponse } from "next/server";
 export function defaultMiddleware() {
   return NextResponse.next();
 }
-export default withCodeAuth(withPluginChat(defaultMiddleware));
+export default withPluginChat(defaultMiddleware);
