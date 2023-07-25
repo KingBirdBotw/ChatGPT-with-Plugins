@@ -1,16 +1,9 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { withBasicAuth } from "./middlewares/basicAuth";
+import { withPluginChat } from "./middlewares/pluginChat";
+import { withCodeAuth } from "./middlewares/codeAuth";
+import { NextResponse } from "next/server";
 
-import { ChatBody } from '@/types/chat';
-
-export const middleware = async (req: NextRequest) => {
-  const chatBody = (await req.json()) as ChatBody;
-  if (chatBody.pluginUrlList && chatBody.pluginUrlList.length > 0) {
-    return NextResponse.redirect(new URL('/api/plugin-chat', req.url));
-  }
+export function defaultMiddleware() {
   return NextResponse.next();
-};
-
-export const config = {
-  matcher: '/api/chat',
-};
+}
+export default withCodeAuth(withPluginChat(defaultMiddleware));

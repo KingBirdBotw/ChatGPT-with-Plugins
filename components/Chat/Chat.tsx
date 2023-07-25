@@ -45,6 +45,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
       conversations,
       models,
       apiKey,
+      authCode,
       pluginKeys,
       serverSideApiKeyIsSet,
       modelError,
@@ -104,6 +105,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
             return rest;
           }),
           key: apiKey,
+          authCode,
           prompt: updatedConversation.prompt,
           temperature: updatedConversation.temperature,
         };
@@ -260,6 +262,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
     },
     [
       apiKey,
+      authCode,
       conversations,
       pluginKeys,
       selectedConversation,

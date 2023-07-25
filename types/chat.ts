@@ -19,6 +19,7 @@ export interface ChatBody {
   model: OpenAIModel;
   messages: Message[];
   key: string;
+  authCode: string;
   prompt: string;
   temperature: number;
   pluginUrlList?: string[];

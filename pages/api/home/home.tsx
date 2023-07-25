@@ -64,6 +64,7 @@ const Home = ({
   const {
     state: {
       apiKey,
+      authCode,
       lightMode,
       folders,
       conversations,
@@ -77,13 +78,14 @@ const Home = ({
   const stopConversationRef = useRef<boolean>(false);
 
   const { data, error, refetch } = useQuery(
-    ['GetModels', apiKey, serverSideApiKeyIsSet],
+    ['GetModels', apiKey, authCode, serverSideApiKeyIsSet],
     ({ signal }) => {
       if (!apiKey && !serverSideApiKeyIsSet) return null;
 
       return getModels(
         {
           key: apiKey,
+          authCode,
         },
         signal,
       );
@@ -258,6 +260,10 @@ const Home = ({
         value: settings.theme,
       });
     }
+
+    const authCode = localStorage.getItem('authCode');
+
+    dispatch({ field: 'authCode', value: authCode });
 
     const apiKey = localStorage.getItem('apiKey');
 

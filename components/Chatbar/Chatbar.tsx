@@ -55,6 +55,15 @@ export const Chatbar = () => {
     [homeDispatch],
   );
 
+  const handleAuthCodeChange = useCallback(
+    (authCode: string) => {
+      homeDispatch({ field: 'authCode', value: authCode });
+
+      localStorage.setItem('authCode', authCode);
+    },
+    [homeDispatch],
+  );
+
   const handlePluginKeyChange = (pluginKey: PluginKey) => {
     if (pluginKeys.some((key) => key.pluginId === pluginKey.pluginId)) {
       const updatedPluginKeys = pluginKeys.map((key) => {
@@ -217,6 +226,7 @@ export const Chatbar = () => {
         handlePluginKeyChange,
         handleClearPluginKey,
         handleApiKeyChange,
+        handleAuthCodeChange,
       }}
     >
       <Sidebar<Conversation>
