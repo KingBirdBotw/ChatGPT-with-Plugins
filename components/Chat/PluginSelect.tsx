@@ -29,7 +29,7 @@ export const PluginSelect: FC<Props> = ({ plugins, setPlugins }) => {
 
   const pluginsIdList = plugins.map((plugin) => plugin.id as string);
   const {
-    state: { lightMode },
+    state: { lightMode, authCode },
   } = useContext(HomeContext);
 
   const selectRef = useRef<HTMLDivElement>(null);
@@ -44,7 +44,7 @@ export const PluginSelect: FC<Props> = ({ plugins, setPlugins }) => {
     const result = await fetch(API.ADD_PLUGIN, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: url }),
+      body: JSON.stringify({ url: url, authCode }),
     });
     return result.json();
   };
