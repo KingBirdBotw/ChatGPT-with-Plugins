@@ -342,3 +342,27 @@ export const runPluginApiOperation = async (
     return response.statusText;
   }
 };
+
+export const PRE_DEFINED_PLUGINS = {
+  "WebPilot": {
+    "id": "WebPilot",
+    "name": "WebPilot",
+    "description": "Browse Webpage/PDF/Data. Chat & Write with one/many/none URLs. WebPilot.ai Powered.",
+    "logo": "https://webreader.webpilotai.com/logo.png",
+    "url": "https://webreader.webpilotai.com"
+  },
+  "web_search": {
+    "id": "web_search",
+    "name": "Web Search",
+    "description": "Search for information from the internet",
+    "url": "https://websearch.plugsugar.com",
+    "logo": "https://websearch.plugsugar.com/200x200.png"
+  },
+  "Coursera": {
+    "id": "Coursera",
+    "name": "Coursera",
+    "description": "Find recommendation for courses, specializations, and degrees on Coursera.",
+    "url": "http://www.coursera.org",
+    "logo": "http://www.coursera.org/api/rest/v1/search/logo.png"
+  },
+}

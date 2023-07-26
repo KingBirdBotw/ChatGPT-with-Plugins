@@ -30,6 +30,7 @@ import { KeyValuePair } from '@/types/data';
 import { FolderInterface, FolderType } from '@/types/folder';
 import { OpenAIModelID, OpenAIModels, fallbackModelID } from '@/types/openai';
 import { Prompt } from '@/types/prompt';
+import { PRE_DEFINED_PLUGINS } from '@/types/plugin';
 
 import { Chat } from '@/components/Chat/Chat';
 import { Chatbar } from '@/components/Chatbar/Chatbar';
@@ -100,6 +101,16 @@ const Home = ({
   useEffect(() => {
     dispatch({ field: 'modelError', value: getModelsError(error) });
   }, [dispatch, error, getModelsError]);
+
+  useEffect(() => {
+    const plugins = localStorage.getItem('plugins');
+
+    if (!plugins || plugins === '{}') {
+      localStorage.setItem('plugins', JSON.stringify(
+        PRE_DEFINED_PLUGINS
+      ));
+    }
+  })
 
   // FETCH MODELS ----------------------------------------------
 
