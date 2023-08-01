@@ -315,7 +315,9 @@ export const runPluginApiOperation = async (
     url = url + '?' + new URLSearchParams(query).toString();
   }
 
-  const headers = {} as any;
+  const headers = {
+    'Content-Type': 'application/json',
+  } as any;
 
   if (operation.nameForModel === 'WebPilot') {
     headers['WebPilot-Friend-UID'] = 'chatgpt-withplugin';
