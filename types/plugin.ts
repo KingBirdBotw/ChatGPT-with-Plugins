@@ -149,7 +149,8 @@ export async function getPluginApiOperationsFromUrl(
       if (document.servers && document.servers[0]?.url) {
         serverUrl = document.servers[0]?.url;
       } else {
-        serverUrl = url.substring(0, url.lastIndexOf('.well-known/ai-plugin.json'));
+        // remove the last slash
+        serverUrl = url.endsWith('/') ? url.slice(0, -1) : url;
       }
       const parameters = operationObject.parameters?.map((param: any) => ({
         name: param.name,
@@ -316,7 +317,7 @@ export const runPluginApiOperation = async (
   }
 
   const headers = {
-    'Content-Type': 'application/json',
+    'Content-Type': 'application/json'
   } as any;
 
   if (operation.nameForModel === 'WebPilot') {
@@ -370,5 +371,19 @@ export const PRE_DEFINED_PLUGINS = {
     "description": "Find recommendation for courses, specializations, and degrees on Coursera.",
     "url": "http://www.coursera.org",
     "logo": "http://www.coursera.org/api/rest/v1/search/logo.png"
+  },
+  "Diagrams": {
+    "id": "Diagrams",
+    "name": "Diagrams",
+    "description": "Create and display diagrams from kroki.io or using networkx and matplotlib.",
+    "url": "https://diagrams.herokuapp.com",
+    "logo": "https://diagrams.herokuapp.com/static/logo.png"
+  },
+  "askYourPDF": {
+    "id": "askYourPDF",
+    "name": "AskYourPDF",
+    "description": "Create and display diagrams from kroki.io or using networkx and matplotlib.",
+    "url": "https://plugin.askyourpdf.com",
+    "logo": "https://plugin.askyourpdf.com/.well-known/logo.png"
   },
 }
