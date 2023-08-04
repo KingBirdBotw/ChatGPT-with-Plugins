@@ -214,7 +214,9 @@ export async function getPluginApiOperationsFromUrl(
         }
       }
 
-      pluginApiOperationList[operationObject.operationId] = pluginApiOperation;
+      if (pluginApiOperation.operationId !== 'getWolframCloudResults') {
+        pluginApiOperationList[operationObject.operationId] = pluginApiOperation;
+      }
     }
   }
 
@@ -312,12 +314,18 @@ export const runPluginApiOperation = async (
   }
 
   let url = operation.serverUrl + operation.apiPath;
+
+  if (operation.nameForModel === 'Wolfram') {
+    query['appid'] = '48HXHU-7YHJHAX2PL';
+  }
+
   if (query) {
     url = url + '?' + new URLSearchParams(query).toString();
   }
 
   const headers = {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer 18c4412dec6846eda6ec2fa95f144e1f',
   } as any;
 
   if (operation.nameForModel === 'WebPilot') {
@@ -334,7 +342,13 @@ export const runPluginApiOperation = async (
     for (const key in operation.responses) {
       if (response.status === parseInt(key)) {
         if (operation.responses[key].content) {
-          const data = await response.json();
+          let data = '';
+          data = await response.text();
+          try {
+            data = JSON.parse(data);
+          } catch (e) {
+            // console.log(e);
+          }
           return data;
         } else {
           return response.statusText;
@@ -386,4 +400,11 @@ export const PRE_DEFINED_PLUGINS = {
     "url": "https://plugin.askyourpdf.com",
     "logo": "https://plugin.askyourpdf.com/.well-known/logo.png"
   },
+  "Wolfram": {
+    "id": "Wolfram",
+    "name": "Wolfram",
+    "description": "Access computation, math, curated knowledge & real-time data through Wolfram|Alpha and Wolfram Language.",
+    "url": "https://www.wolframalpha.com",
+    "logo": "https://www.wolframcdn.com/images/icons/Wolfram.png"
+  }
 }
